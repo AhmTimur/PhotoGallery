@@ -1,21 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
+import {store} from "./src/redux/redux-store";
+import {Provider} from "react-redux";
+import {HomeScreen} from "./src/Components/HomeScreen";
+import {DetailsScreen} from "./src/Components/DetailsScreen";
+import {NavigationContainer, } from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
+
+React.createContext(store)
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+        <Provider store={store}>
+
+                <NavigationContainer>
+                    <Stack.Navigator>
+                        <Stack.Screen name="Photos" component={HomeScreen} options={{headerStyle: {backgroundColor: '#376da3'}}}/>
+                        <Stack.Screen name="Details" component={DetailsScreen} options={{headerStyle: {backgroundColor: '#376da3'}}}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+        </Provider>
+
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+    },
+    text: {
+        color: 'white',
+        fontSize: 26
+    }
 });
